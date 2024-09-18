@@ -1,8 +1,12 @@
 package com.dicoding.picodiploma.loginwithanimation.view.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -26,6 +30,21 @@ class LoginActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
+        playAnimationLogin()
+    }
+
+    @SuppressLint("Recycle")
+    private fun playAnimationLogin() {
+        val translationY = ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_Y, -50f, 10f).apply {
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+
+        val textTitle =  ObjectAnimator.ofFloat(binding.titleTextView, View.ALPHA,1f)
+         AnimatorSet().apply {
+             playTogether(translationY, textTitle)
+             duration = 600
+         }.start()
     }
 
     private fun setupView() {
